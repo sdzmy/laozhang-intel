@@ -100,33 +100,33 @@ def translate_batch(items):
         "保留专有名词和机构名）。只返回一个 JSON 对象，key 是序号（字符串），value 是中文译文，不要解释。\n\n"
         + numbered
     )
-    try:
-        resp = client.chat.completions.create(
-            model=MODEL,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.3,
-            timeout=30,
-            response_format={"type": "json_object"},
-        )
-        raw = resp.choices[0].message.content
-        data = json.loads(raw)
-        # data 可能是 {"1": "...", "2": "..."} 或嵌套在某个 key 里
-        if all(isinstance(v, str) for v in data.values()):
-            mp = {int(k): v for k, v in data.items()}
-        else:
-            # 嵌套结构，找第一个值是 dict/list 的
-            for v in data.values():
-                if isinstance(v, dict):
-                    mp = {int(k): str(val) for k, val in v.items()}
-                    break
+    import time
+    mp = {}
+    for attempt in range(3):
+        try:
+            resp = client.chat.completions.create(
+                model=MODEL,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.3,
+                timeout=60,
+                response_format={"type": "json_object"},
+            )
+            raw = resp.choices[0].message.content
+            data = json.loads(raw)
+            if all(isinstance(v, str) for v in data.values()):
+                mp = {int(k): v for k, v in data.items()}
             else:
-                mp = {}
-        for i, it in enumerate(items):
-            it["title_cn"] = mp.get(i + 1, it["title_en"])
-    except Exception as ex:
-        print(f"[WARN] LLM 翻译失败，保留英文: {ex}", file=sys.stderr)
-        for it in items:
-            it["title_cn"] = it["title_en"]
+                for v in data.values():
+                    if isinstance(v, dict):
+                        mp = {int(k): str(val) for k, val in v.items()}
+                        break
+            if mp:
+                break
+        except Exception as ex:
+            print(f"[WARN] 第{attempt+1}次翻译失败: {ex}", file=sys.stderr)
+            time.sleep(5)
+    for i, it in enumerate(items):
+        it["title_cn"] = mp.get(i + 1, it["title_en"])
     for it in items:
         it["summary_cn"] = ""
 
