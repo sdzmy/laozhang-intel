@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老张的情报站</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #0d1117; color: #e6edf3; line-height:1.6;
+  }
+  header {
+    text-align:center; padding:40px 20px 30px;
+    background: linear-gradient(135deg,#1a1f2e 0%,#0d1117 100%);
+    border-bottom: 2px solid #d4a017;
+  }
+  header h1 {
+    font-size: 3.2em; font-weight:900; letter-spacing:8px;
+    background: linear-gradient(90deg,#d4a017,#ffd700,#d4a017);
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    text-shadow: 0 0 30px rgba(212,175,55,.3);
+  }
+  header .sub { color:#8b949e; margin-top:10px; font-size:1.05em; }
+  header .time { color:#d4a017; margin-top:6px; font-size:.95em; }
+  .container { max-width:1200px; margin:0 auto; padding:30px 20px; }
+  .category { margin-bottom:40px; }
+  .category h2 {
+    font-size:1.6em; padding-bottom:10px; margin-bottom:18px;
+    border-bottom:2px solid; display:flex; align-items:baseline; gap:10px;
+  }
+  .category h2 small { color:#8b949e; font-size:.6em; font-weight:normal; }
+  .news-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:12px; }
+  .news-item {
+    background:#161b22; border:1px solid #30363d; border-radius:8px;
+    padding:14px 16px; text-decoration:none; color:inherit;
+    transition: transform .15s, border-color .15s; display:block;
+  }
+  .news-item:hover { transform:translateY(-2px); border-color:#d4a017; }
+  .news-title { font-size:1.02em; font-weight:600; color:#e6edf3; margin-bottom:8px; }
+  .news-meta { font-size:.78em; color:#8b949e; }
+  .news-meta .src { color:#d4a017; margin-right:10px; }
+  .news-meta .en { display:block; margin-top:3px; font-style:italic; opacity:.7; }
+  footer { text-align:center; padding:30px; color:#6e7681; font-size:.85em; border-top:1px solid #21262d; }
+</style>
+</head>
+<body>
+<header>
+  <h1>老张的情报站</h1>
+  <div class="sub">全球时政 · 财金 · 军事 · 科技 每日情报速递</div>
+  <div class="time">更新时间：2026-11-03 16:10（北京时间）</div>
+</header>
+<div class="container">
+  
+        <section class="category">
+            <h2 style="border-color:#e74c3c"><span style="color:#e74c3c">🌍</span> 时政 <small>8 条</small></h2>
+            <div class="news-list">
+                <a class="news-item" href="https://www.npr.org/2026/11/02/g-s1-151215/up-first-newsletter-michigan-senate-iran-war-supreme-court-colorado-catholic-church" target="_blank" rel="noopener">
+                    <div class="news-title">Haley Stevens backs Mike Rogers. And, Gulf states brace for potential attack on Iran</div>
+                    <div class="news-meta">
+                        <span class="src">🌍 NPR World</span>
+                        <span class="en">Haley Stevens backs Mike Rogers. And, Gulf states brace for potential attack on Iran</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.npr.org/2026/11/02/nx-s1-6022261/hundreds-evacuate-city-during-temporary-ceasefire-between-russia-and-ukraine" target="_blank" rel="noopener">
+                    <div class="news-title">Hundreds evacuate city during temporary ceasefire between Russia and Ukraine</div>
+                    <div class="news-meta">
+                        <span class="src">🌍 NPR World</span>
+                        <span class="en">Hundreds evacuate city during temporary ceasefire between Russia and Ukraine</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.npr.org/2026/11/02/nx-s1-6026050/uns-peacekeeping-western-sahara-ends" target="_blank" rel="noopener">
+                    <div class="news-title">UN&#x27;s peacekeeping mission in disputed Western Sahara ends after 35 years</div>
+                    <div class="news-meta">
+                        <span class="src">🌍 NPR World</span>
+                        <span class="en">UN&#x27;s peacekeeping mission in disputed Western Sahara ends after 35 years</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.npr.org/2026/11/01/nx-s1-6025438/this-legendary-board-game-could-take-decades-to-complete" target="_blank" rel="noopener">
+                    <div class="news-title">This legendary board game could take decades to complete</div>
+                    <div class="news-meta">
+                        <span class="src">🌍 NPR World</span>
+                        <span class="en">This legendary board game could take decades to complete</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.npr.org/2026/11/01/nx-s1-6023237/gulf-leaders-meet-in-qatar-in-effort-to-stave-off-new-escalation-in-u-s-and-iran-war" target="_blank" rel="noopener">
+                    <div class="news-title">Gulf region on edge as Qatar leads talks with Iran to stave off new U.S. attacks</div>
+                    <div class="news-meta">
+                        <span class="src">🌍 NPR World</span>
+                        <span class="en">Gulf region on edge as Qatar leads talks with Iran to stave off new U.S. attacks</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.npr.org/2026/11/01/nx-s1-6022214/they-signed-up-for-a-lifetime-at-sea-on-an-endless-cruise-high-gas-prices-intervened" target="_blank" rel="noopener">
+                    <div class="news-title">They signed up for a lifetime at sea on an endless cruise. High gas prices intervened</div>
+                    <div class="news-meta">
+                        <span class="src">🌍 NPR World</span>
+                        <span class="en">They signed up for a lifetime at sea on an endless cruise. High gas prices intervened</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.npr.org/2026/10/31/nx-s1-6022223/secretary-rubio-has-a-tough-time-getting-officials-at-g20-on-the-same-page" target="_blank" rel="noopener">
+                    <div class="news-title">Secretary Rubio has a tough time getting officials at G20 on the same page</div>
+                    <div class="news-meta">
+                        <span class="src">🌍 NPR World</span>
+                        <span class="en">Secretary Rubio has a tough time getting officials at G20 on the same page</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.npr.org/2026/10/31/nx-s1-6020639/a-new-political-era-in-the-southern-philippines" target="_blank" rel="noopener">
+                    <div class="news-title">A new political era in the Southern Philippines</div>
+                    <div class="news-meta">
+                        <span class="src">🌍 NPR World</span>
+                        <span class="en">A new political era in the Southern Philippines</span>
+                    </div>
+                </a></div>
+        </section>
+        <section class="category">
+            <h2 style="border-color:#f39c12"><span style="color:#f39c12">💰</span> 财金 <small>8 条</small></h2>
+            <div class="news-list">
+                <a class="news-item" href="https://www.marketwatch.com/story/heres-why-palantirs-stock-is-down-despite-a-bombastic-quarter-42c9fdb8?mod=mw_rss_topstories" target="_blank" rel="noopener">
+                    <div class="news-title">Here’s why Palantir’s stock is down despite a ‘bombastic’ quarter</div>
+                    <div class="news-meta">
+                        <span class="src">💰 MarketWatch</span>
+                        <span class="en">Here’s why Palantir’s stock is down despite a ‘bombastic’ quarter</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.marketwatch.com/story/apples-iphone-business-is-booming-heres-why-the-stock-is-falling-anyway-07de9fff?mod=mw_rss_topstories" target="_blank" rel="noopener">
+                    <div class="news-title">Apple’s iPhone business is booming. Here’s why the stock is falling anyway.</div>
+                    <div class="news-meta">
+                        <span class="src">💰 MarketWatch</span>
+                        <span class="en">Apple’s iPhone business is booming. Here’s why the stock is falling anyway.</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.marketwatch.com/story/nasdaq-100-tumbles-into-its-third-correction-this-year-as-ai-worries-mount-abee4c0d?mod=mw_rss_topstories" target="_blank" rel="noopener">
+                    <div class="news-title">Nasdaq-100 tumbles into its third correction this year as AI worries mount</div>
+                    <div class="news-meta">
+                        <span class="src">💰 MarketWatch</span>
+                        <span class="en">Nasdaq-100 tumbles into its third correction this year as AI worries mount</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.marketwatch.com/story/marvell-and-lumentum-shareholders-unite-in-panning-merger-deal-its-a-trash-offer-53a9f307?mod=mw_rss_topstories" target="_blank" rel="noopener">
+                    <div class="news-title">Marvell and Lumentum shareholders unite in panning merger deal: ‘It’s a trash offer’</div>
+                    <div class="news-meta">
+                        <span class="src">💰 MarketWatch</span>
+                        <span class="en">Marvell and Lumentum shareholders unite in panning merger deal: ‘It’s a trash offer’</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.marketwatch.com/story/traders-rushing-into-a-leveraged-etf-to-make-a-bullish-bet-on-the-nasdaq-100-just-got-burned-d6775191?mod=mw_rss_topstories" target="_blank" rel="noopener">
+                    <div class="news-title">Traders rushing into a leveraged ETF to make a bullish bet on the Nasdaq-100 just got burned</div>
+                    <div class="news-meta">
+                        <span class="src">💰 MarketWatch</span>
+                        <span class="en">Traders rushing into a leveraged ETF to make a bullish bet on the Nasdaq-100 just got burned</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.marketwatch.com/story/wall-streets-most-hated-stocks-are-faring-far-better-than-its-favorites-4c1d6c68?mod=mw_rss_topstories" target="_blank" rel="noopener">
+                    <div class="news-title">Wall Street’s most hated stocks are faring far better than its favorites</div>
+                    <div class="news-meta">
+                        <span class="src">💰 MarketWatch</span>
+                        <span class="en">Wall Street’s most hated stocks are faring far better than its favorites</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.marketwatch.com/story/if-you-really-want-to-help-your-adult-kids-and-grandkids-give-them-money-while-youre-still-alive-bef6b056?mod=mw_rss_topstories" target="_blank" rel="noopener">
+                    <div class="news-title">Want to help your adult kids and grandkids? Give them money while you’re still alive.</div>
+                    <div class="news-meta">
+                        <span class="src">💰 MarketWatch</span>
+                        <span class="en">Want to help your adult kids and grandkids? Give them money while you’re still alive.</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.marketwatch.com/story/shes-a-type-a-personality-my-stepmother-wants-me-to-repay-my-late-fathers-40-000-wedding-gift-should-i-oblige-51fc64f7?mod=mw_rss_topstories" target="_blank" rel="noopener">
+                    <div class="news-title">‘She’s a Type A personality’: My stepmother wants me to repay my late father’s $40,000 wedding gift. Should I oblige?</div>
+                    <div class="news-meta">
+                        <span class="src">💰 MarketWatch</span>
+                        <span class="en">‘She’s a Type A personality’: My stepmother wants me to repay my late father’s $40,000 wedding gift. Should I oblige?</span>
+                    </div>
+                </a></div>
+        </section>
+        <section class="category">
+            <h2 style="border-color:#9b59b6"><span style="color:#9b59b6">🎖️</span> 军事 <small>24 条</small></h2>
+            <div class="news-list">
+                <a class="news-item" href="https://www.defenseone.com/policy/2026/11/industry-groups-cyber-sharing-law/416993/" target="_blank" rel="noopener">
+                    <div class="news-title">Industry groups want cyber threat-sharing law renewed through defense authorization bill</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ Defense One</span>
+                        <span class="en">Industry groups want cyber threat-sharing law renewed through defense authorization bill</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.defenseone.com/threats/2026/11/officials-suspect-iran-series-cyberattacks-military-base-freezers/416992/" target="_blank" rel="noopener">
+                    <div class="news-title">Officials suspect Iran of cyberattacks on military base freezers</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ Defense One</span>
+                        <span class="en">Officials suspect Iran of cyberattacks on military base freezers</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.defenseone.com/technology/2026/11/pentagons-it-agency-wants-bridge-network-gaps-pacific/416963/" target="_blank" rel="noopener">
+                    <div class="news-title">The Pentagon’s IT agency wants to bridge network gaps in the Pacific</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ Defense One</span>
+                        <span class="en">The Pentagon’s IT agency wants to bridge network gaps in the Pacific</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.defenseone.com/ideas/2026/10/across-line/416947/" target="_blank" rel="noopener">
+                    <div class="news-title">Across the line</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ Defense One</span>
+                        <span class="en">Across the line</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.defenseone.com/threats/2026/10/pentagon-investigates-suspected-cyberattack-behind-military-freezer-failures/416929/" target="_blank" rel="noopener">
+                    <div class="news-title">Six military freezers went bad in August. Was it a cyber attack?</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ Defense One</span>
+                        <span class="en">Six military freezers went bad in August. Was it a cyber attack?</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.defenseone.com/technology/2026/10/army-pilots-are-trying-virtual-reality-stay-more-alert-flight/416915/" target="_blank" rel="noopener">
+                    <div class="news-title">Army pilots are trying virtual reality to stay more alert in flight</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ Defense One</span>
+                        <span class="en">Army pilots are trying virtual reality to stay more alert in flight</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.defenseone.com/defense-systems/2026/10/inertial-navigation-ground-robot-swarms/416914/" target="_blank" rel="noopener">
+                    <div class="news-title">Can inertial navigation make ground-robot swarms real?</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ Defense One</span>
+                        <span class="en">Can inertial navigation make ground-robot swarms real?</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.defenseone.com/business/2026/10/defense-business-brief-tech-edge-pacfleet-talks-cyber-and-more/416906/" target="_blank" rel="noopener">
+                    <div class="news-title">Defense Business Brief: Tech at the edge; PACFLEET talks cyber; and more</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ Defense One</span>
+                        <span class="en">Defense Business Brief: Tech at the edge; PACFLEET talks cyber; and more</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.twz.com/nuclear/a-nuclear-strike-on-iran-it-sounds-absurd-because-it-is-lets-talk-about-it" target="_blank" rel="noopener">
+                    <div class="news-title">A Nuclear Strike On Iran? It Sounds Absurd Because It Is. Let’s Talk About It</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ The War Zone</span>
+                        <span class="en">A Nuclear Strike On Iran? It Sounds Absurd Because It Is. Let’s Talk About It</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.twz.com/news-features/laser-weapon-now-guarding-trumps-mar-a-lago-estate" target="_blank" rel="noopener">
+                    <div class="news-title">Counter-Drone Laser Weapon Now Guarding Trump’s Mar-a-Lago Alongside SAMs</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ The War Zone</span>
+                        <span class="en">Counter-Drone Laser Weapon Now Guarding Trump’s Mar-a-Lago Alongside SAMs</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.twz.com/sea/new-cb90-cx-is-bigger-optionally-crewed-evolution-of-saabs-proven-combat-boat" target="_blank" rel="noopener">
+                    <div class="news-title">New CB90 CX Is Bigger, Optionally Crewed Evolution Of Saab’s Proven Combat Boat</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ The War Zone</span>
+                        <span class="en">New CB90 CX Is Bigger, Optionally Crewed Evolution Of Saab’s Proven Combat Boat</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.twz.com/air/new-x-plane-to-be-announced-at-max-power-airshow-nasa-administrator-isaacman" target="_blank" rel="noopener">
+                    <div class="news-title">New X-Plane To Be Announced At Max Power Airshow: NASA Administrator Isaacman</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ The War Zone</span>
+                        <span class="en">New X-Plane To Be Announced At Max Power Airshow: NASA Administrator Isaacman</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.twz.com/news-features/these-are-the-u-s-weapons-most-at-risk-in-the-looming-rare-earths-supply-crisis" target="_blank" rel="noopener">
+                    <div class="news-title">These Are The U.S. Weapons Most At Risk In The Looming Rare Earths Supply Crisis</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ The War Zone</span>
+                        <span class="en">These Are The U.S. Weapons Most At Risk In The Looming Rare Earths Supply Crisis</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.twz.com/land/avenger-assemble-surface-to-air-missiles-deployed-to-protect-trumps-mar-a-lago-estate" target="_blank" rel="noopener">
+                    <div class="news-title">Surface-To-Air Missiles Deployed To Protect Trump’s Mar-a-Lago Estate</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ The War Zone</span>
+                        <span class="en">Surface-To-Air Missiles Deployed To Protect Trump’s Mar-a-Lago Estate</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.twz.com/news-features/bunker-talk-lets-talk-about-all-the-things-we-did-and-didnt-cover-this-week-213" target="_blank" rel="noopener">
+                    <div class="news-title">Bunker Talk: Let’s Talk About All The Things We Did And Didn’t Cover This Week</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ The War Zone</span>
+                        <span class="en">Bunker Talk: Let’s Talk About All The Things We Did And Didn’t Cover This Week</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.twz.com/air/stealthy-gj-21-drone-has-launched-and-recovered-from-type-076-amphibious-assault-ship-china-claims" target="_blank" rel="noopener">
+                    <div class="news-title">Stealthy GJ-21 Drone Has Launched And Recovered From Type 076 Amphibious Assault Ship, China Claims</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ The War Zone</span>
+                        <span class="en">Stealthy GJ-21 Drone Has Launched And Recovered From Type 076 Amphibious Assault Ship, China Claims</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://spacenews.com/how-to-expand-reliable-flexible-access-to-space/" target="_blank" rel="noopener">
+                    <div class="news-title">How to Expand Reliable, Flexible Access to Space</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ SpaceNews</span>
+                        <span class="en">How to Expand Reliable, Flexible Access to Space</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://spacenews.com/esi-supplying-solar-array-components-to-missile-defense-programs/" target="_blank" rel="noopener">
+                    <div class="news-title">ESI supplying solar array components to missile defense programs</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ SpaceNews</span>
+                        <span class="en">ESI supplying solar array components to missile defense programs</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://spacenews.com/advice-for-optimizing-the-space-industry-with-laura-crabtree/" target="_blank" rel="noopener">
+                    <div class="news-title">Advice for optimizing the space industry with Laura Crabtree</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ SpaceNews</span>
+                        <span class="en">Advice for optimizing the space industry with Laura Crabtree</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://spacenews.com/flexell-space-and-satoro-agree-to-collaborate-on-in-orbit-demonstration-of-next-generation-space-solar-cells/" target="_blank" rel="noopener">
+                    <div class="news-title">Flexell Space and Satoro Agree to Collaborate on In-Orbit Demonstration of Next-Generation Space Solar Cells</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ SpaceNews</span>
+                        <span class="en">Flexell Space and Satoro Agree to Collaborate on In-Orbit Demonstration of Next-Generation Space Solar Cells</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://spacenews.com/ukrainian-startup-gomspace-test-satellite-for-future-communications-network/" target="_blank" rel="noopener">
+                    <div class="news-title">Ukrainian startup, GomSpace test satellite for future communications network</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ SpaceNews</span>
+                        <span class="en">Ukrainian startup, GomSpace test satellite for future communications network</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://spacenews.com/craft-prospect-kicks-off-perseus-project-to-advance-optical-communications-for-space/" target="_blank" rel="noopener">
+                    <div class="news-title">Craft Prospect kicks off PERSEUS project to advance optical communications for space</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ SpaceNews</span>
+                        <span class="en">Craft Prospect kicks off PERSEUS project to advance optical communications for space</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://spacenews.com/flexell-space-establishes-french-subsidiary-to-strengthen-european-presence/" target="_blank" rel="noopener">
+                    <div class="news-title">Flexell Space Establishes French Subsidiary to Strengthen European Presence</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ SpaceNews</span>
+                        <span class="en">Flexell Space Establishes French Subsidiary to Strengthen European Presence</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://spacenews.com/astranis-upgrades-falcon-9-launch-contract-to-dedicated-mission-for-entire-block-4-production-run-of-satellites/" target="_blank" rel="noopener">
+                    <div class="news-title">Astranis Upgrades Falcon 9 Launch Contract to Dedicated Mission for Entire Block 4 Production Run of Satellites</div>
+                    <div class="news-meta">
+                        <span class="src">🎖️ SpaceNews</span>
+                        <span class="en">Astranis Upgrades Falcon 9 Launch Contract to Dedicated Mission for Entire Block 4 Production Run of Satellites</span>
+                    </div>
+                </a></div>
+        </section>
+        <section class="category">
+            <h2 style="border-color:#3498db"><span style="color:#3498db">🔬</span> 科技 <small>25 条</small></h2>
+            <div class="news-list">
+                <a class="news-item" href="https://techcrunch.com/2026/11/03/yvonne-bajela-is-bringing-17m-in-fresh-capital-to-europes-startup-scene/" target="_blank" rel="noopener">
+                    <div class="news-title">Yvonne Bajela is bringing $17M in fresh capital to Europe’s startup scene</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 TechCrunch</span>
+                        <span class="en">Yvonne Bajela is bringing $17M in fresh capital to Europe’s startup scene</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://techcrunch.com/2026/11/02/apple-watchs-ai-features-for-rewinding-and-recapping-conversations-begin-beta-testing/" target="_blank" rel="noopener">
+                    <div class="news-title">Apple Watch’s AI features for rewinding and recapping conversations begin beta testing</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 TechCrunch</span>
+                        <span class="en">Apple Watch’s AI features for rewinding and recapping conversations begin beta testing</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://techcrunch.com/2026/11/02/google-takes-dreambeans-to-india-in-bid-to-bring-ai-generated-personal-stories-to-the-masses/" target="_blank" rel="noopener">
+                    <div class="news-title">Google takes Dreambeans to India in bid to bring AI-generated personal stories to the masses</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 TechCrunch</span>
+                        <span class="en">Google takes Dreambeans to India in bid to bring AI-generated personal stories to the masses</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://techcrunch.com/2026/11/02/apple-may-try-to-increase-revenue-by-doing-something-with-third-party-ai-apps/" target="_blank" rel="noopener">
+                    <div class="news-title">Apple may try to increase revenue by doing…something with third-party AI apps</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 TechCrunch</span>
+                        <span class="en">Apple may try to increase revenue by doing…something with third-party AI apps</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://techcrunch.com/2026/11/02/ukraines-new-pocket-sized-gadget-turns-russian-drones-cameras-against-them/" target="_blank" rel="noopener">
+                    <div class="news-title">Ukraine’s new pocket-sized gadget turns Russian drones’ cameras against them</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 TechCrunch</span>
+                        <span class="en">Ukraine’s new pocket-sized gadget turns Russian drones’ cameras against them</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://techcrunch.com/2026/11/02/y-combinators-garry-tan-uses-ai-agents-so-much-he-spends-up-to-200k-a-year-on-tokens/" target="_blank" rel="noopener">
+                    <div class="news-title">Y Combinator’s Garry Tan uses AI agents so much, he spends up to $200K a year on tokens</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 TechCrunch</span>
+                        <span class="en">Y Combinator’s Garry Tan uses AI agents so much, he spends up to $200K a year on tokens</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://techcrunch.com/2026/11/02/hinge-tests-a-cheaper-plan-as-users-become-more-fed-up-paying-for-dating-apps/" target="_blank" rel="noopener">
+                    <div class="news-title">Hinge tests a cheaper plan as users become more fed up paying for dating apps</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 TechCrunch</span>
+                        <span class="en">Hinge tests a cheaper plan as users become more fed up paying for dating apps</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://techcrunch.com/2026/11/02/apple-says-its-hard-to-predict-when-iphone-duo-constraints-will-improve/" target="_blank" rel="noopener">
+                    <div class="news-title">Apple says it’s ‘hard to predict’ when iPhone Duo constraints will improve</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 TechCrunch</span>
+                        <span class="en">Apple says it’s ‘hard to predict’ when iPhone Duo constraints will improve</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.theverge.com/tech/1024915/apple-iphone-duo-supply-chain-constraints" target="_blank" rel="noopener">
+                    <div class="news-title">Apple is ‘not able to predict’ when it&amp;#8217;ll have enough iPhone Duos to go around</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 The Verge</span>
+                        <span class="en">Apple is ‘not able to predict’ when it&amp;#8217;ll have enough iPhone Duos to go around</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.theverge.com/tech/1024748/apple-q4-2026-iphone-sales-earnings" target="_blank" rel="noopener">
+                    <div class="news-title">Apple set an iPhone sales record even without a new standard iPhone</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 The Verge</span>
+                        <span class="en">Apple set an iPhone sales record even without a new standard iPhone</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.theverge.com/tech/1024835/meta-vr-quest-2-pro-os-end-updates" target="_blank" rel="noopener">
+                    <div class="news-title">Meta will end Quest 2 OS updates in 2027</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 The Verge</span>
+                        <span class="en">Meta will end Quest 2 OS updates in 2027</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.theverge.com/1024807/google-botnet-android-tv-shut-down" target="_blank" rel="noopener">
+                    <div class="news-title">One of Google’s Android partners turned 1.3 million set-top boxes into a botnet</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 The Verge</span>
+                        <span class="en">One of Google’s Android partners turned 1.3 million set-top boxes into a botnet</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.theverge.com/transportation/1024616/bmw-level-2-city-driver-assist-2027" target="_blank" rel="noopener">
+                    <div class="news-title">BMW is taking on Tesla’s FSD with urban driver assist starting in 2027</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 The Verge</span>
+                        <span class="en">BMW is taking on Tesla’s FSD with urban driver assist starting in 2027</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.theverge.com/gadgets/1024416/apple-watch-ultra-4-ugreen-finetrack-2-bluetooth-tracker-deal-sale" target="_blank" rel="noopener">
+                    <div class="news-title">The Apple Watch Ultra 4 is $100 off, matching its best price to date</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 The Verge</span>
+                        <span class="en">The Apple Watch Ultra 4 is $100 off, matching its best price to date</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.theverge.com/transportation/1024386/ford-customer-driving-data-privacy-promise-data-brokers" target="_blank" rel="noopener">
+                    <div class="news-title">Ford promises not to sell your driving habits to data brokers</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 The Verge</span>
+                        <span class="en">Ford promises not to sell your driving habits to data brokers</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.theverge.com/ai-artificial-intelligence/1024632/anthropic-claude-ai-video-game-clones" target="_blank" rel="noopener">
+                    <div class="news-title">Anthropic clamps down on Claude’s AI video game clones</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 The Verge</span>
+                        <span class="en">Anthropic clamps down on Claude’s AI video game clones</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.wired.com/story/canon-promo-code/" target="_blank" rel="noopener">
+                    <div class="news-title">30% Off Canon Promo Codes | November 2026</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Wired</span>
+                        <span class="en">30% Off Canon Promo Codes | November 2026</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.wired.com/story/uber-eats-promo-code/" target="_blank" rel="noopener">
+                    <div class="news-title">Uber Eats Promo Codes: $15 Off│November 2026</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Wired</span>
+                        <span class="en">Uber Eats Promo Codes: $15 Off│November 2026</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.wired.com/story/hotels-com-coupon/" target="_blank" rel="noopener">
+                    <div class="news-title">Hotels.com Coupon Codes for November 2026</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Wired</span>
+                        <span class="en">Hotels.com Coupon Codes for November 2026</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.wired.com/story/brooks-promo-code/" target="_blank" rel="noopener">
+                    <div class="news-title">20% Off Brooks Promo Code | November 2026</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Wired</span>
+                        <span class="en">20% Off Brooks Promo Code | November 2026</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.wired.com/story/chewy-promo-code/" target="_blank" rel="noopener">
+                    <div class="news-title">Chewy Promo Codes: $20 Off November 2026</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Wired</span>
+                        <span class="en">Chewy Promo Codes: $20 Off November 2026</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.wired.com/story/dell-coupon-code/" target="_blank" rel="noopener">
+                    <div class="news-title">Dell Coupon Codes: 20% Off for November 2026</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Wired</span>
+                        <span class="en">Dell Coupon Codes: 20% Off for November 2026</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.wired.com/story/att-promo-code/" target="_blank" rel="noopener">
+                    <div class="news-title">AT&amp;T Promo Codes: $50 Off This November 2026</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Wired</span>
+                        <span class="en">AT&amp;T Promo Codes: $50 Off This November 2026</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.wired.com/story/exclusive-kitchenaid-promo-code/" target="_blank" rel="noopener">
+                    <div class="news-title">KitchenAid Promo Codes: Save Up to 20%</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Wired</span>
+                        <span class="en">KitchenAid Promo Codes: Save Up to 20%</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://arstechnica.com/space/2026/11/at-home-in-space-opens-caps-air-and-space-museum-renovation/" target="_blank" rel="noopener">
+                    <div class="news-title">&quot;At Home in Space&quot; opens, caps Air and Space Museum renovation</div>
+                    <div class="news-meta">
+                        <span class="src">🔬 Ars Technica</span>
+                        <span class="en">&quot;At Home in Space&quot; opens, caps Air and Space Museum renovation</span>
+                    </div>
+                </a></div>
+        </section>
+</div>
+<footer>老张的情报站 · 自动采集自全球主流媒体 RSS · 中文由 AI 翻译生成</footer>
+</body>
+</html>
