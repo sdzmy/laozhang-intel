@@ -1,0 +1,4 @@
+[build]
+  publish = "."
+
+# 纯静态站，不需要 build 命令（index.html 由 GitHub Actions 生成并提交）
