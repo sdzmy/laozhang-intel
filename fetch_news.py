@@ -7,10 +7,14 @@ import os
 import sys
 import json
 import html
+import socket
 import datetime
 import feedparser
 from dateutil import parser as dateparser
 from openai import OpenAI
+
+# 全局 10 秒超时，防止某个 RSS 源卡死整个流程
+socket.setdefaulttimeout(10)
 
 # ============ 新闻源配置（时政 / 财金 / 军事 / 科技） ============
 SOURCES = {
@@ -42,8 +46,8 @@ SOURCES = {
     ],
 }
 
-MAX_PER_SOURCE = 8
-MAX_PER_CATEGORY = 25
+MAX_PER_SOURCE = 5
+MAX_PER_CATEGORY = 15
 
 # ============ LLM 配置 ============
 API_KEY   = os.environ.get("OPENAI_API_KEY", "")
@@ -101,6 +105,7 @@ def translate_batch(items):
             model=MODEL,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.3,
+            timeout=30,
             response_format={"type": "json_object"},
         )
         raw = resp.choices[0].message.content
