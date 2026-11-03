@@ -24,18 +24,23 @@ SOURCES = {
         ("NPR World",        "https://feeds.npr.org/1004/rss.xml"),
         ("Al Jazeera",       "https://www.aljazeera.com/xml/rss/all.xml"),
         ("AP Top News",      "https://feeds.apnews.com/rss/apf-topnews"),
+        ("澎湃新闻",          "https://feed.pengpai.com/news"),
+        ("观察者网",          "https://www.guancha.cn/rss/"),
     ],
     "财金": [
         ("CNBC World",       "https://www.cnbc.com/id/100727363/device/rss/rss.html"),
         ("Financial Times",  "https://www.ft.com/?format=rss"),
         ("MarketWatch",      "https://feeds.marketwatch.com/marketwatch/topstories/"),
         ("Yahoo Finance",    "https://finance.yahoo.com/news/rssindex"),
+        ("华尔街见闻",         "https://dedicated.wallstreetcn.com/rss.xml"),
+        ("财新网",           "https://www.caixin.com/rss/finance.xml"),
     ],
     "军事": [
         ("Defense One",      "https://www.defenseone.com/rss/all/"),
         ("Breaking Defense", "https://breakingdefense.com/feed/"),
         ("The War Zone",     "https://www.twz.com/rss"),
         ("SpaceNews",        "https://spacenews.com/feed/"),
+        ("环球军事",          "https://www.huanqiu.com/rss/mil.xml"),
     ],
     "科技": [
         ("TechCrunch",       "https://techcrunch.com/feed/"),
@@ -43,6 +48,8 @@ SOURCES = {
         ("Wired",            "https://www.wired.com/feed/rss"),
         ("Ars Technica",     "https://feeds.arstechnica.com/arstechnica/index"),
         ("Hacker News",      "https://hnrss.org/frontpage"),
+        ("36氪",             "https://36kr.com/feed"),
+        ("虎嗅",             "https://www.huxiu.com/rss/0.xml"),
     ],
 }
 
@@ -85,16 +92,29 @@ def fetch_category(category, feeds):
     return items[:MAX_PER_CATEGORY]
 
 
+def has_chinese(text):
+    return any('\u4e00' <= ch <= '\u9fff' for ch in text)
+
+
 def translate_batch(items):
-    """批量把英文标题翻译成中文，原地写回 title_cn"""
-    if not client:
-        for it in items:
+    """批量把英文标题翻译成中文，原地写回 title_cn。中文标题自动跳过。"""
+    # 中文标题直接用，不翻译
+    to_translate = []
+    for it in items:
+        if has_chinese(it["title_en"]):
             it["title_cn"] = it["title_en"]
-            it["summary_cn"] = ""
+        else:
+            to_translate.append(it)
+
+    if not to_translate:
+        return
+    if not client:
+        for it in to_translate:
+            it["title_cn"] = it["title_en"]
         return
 
     # 编号后让 LLM 翻译，返回 序号->中文 的字典
-    numbered = "\n".join(f"{i+1}. {it['title_en']}" for i, it in enumerate(items))
+    numbered = "\n".join(f"{i+1}. {it['title_en']}" for i, it in enumerate(to_translate))
     prompt = (
         "把以下英文新闻标题翻译成简洁、地道的中文（时政财经军事科技类新闻，"
         "保留专有名词和机构名）。只返回一个 JSON 对象，key 是序号（字符串），value 是中文译文，不要解释。\n\n"
@@ -125,7 +145,7 @@ def translate_batch(items):
         except Exception as ex:
             print(f"[WARN] 第{attempt+1}次翻译失败: {ex}", file=sys.stderr)
             time.sleep(5)
-    for i, it in enumerate(items):
+    for i, it in enumerate(to_translate):
         it["title_cn"] = mp.get(i + 1, it["title_en"])
     for it in items:
         it["summary_cn"] = ""
