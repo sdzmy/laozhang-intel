@@ -1,0 +1,36 @@
+name: 更新情报站
+
+# 北京时间 6:00 / 9:00 / 14:00 / 21:00 = UTC 22:00 / 1:00 / 6:00 / 13:00
+on:
+  schedule:
+    - cron: "0 22,1,6,13 * * *"
+  workflow_dispatch: {}  # 允许手动点按钮跑
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install -r requirements.txt
+
+      - name: 抓新闻并翻译
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+        run: python fetch_news.py
+
+      - name: 提交 index.html
+        run: |
+          git config user.name "laozhang-bot"
+          git config user.email "laozhang-bot@users.noreply.github.com"
+          git add index.html
+          git diff --quiet && echo "无变化，跳过提交" || (git commit -m "更新情报站 $(date -u '+%Y-%m-%d %H:%M UTC')" && git push)
