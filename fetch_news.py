@@ -89,11 +89,11 @@ def translate_batch(items):
             it["summary_cn"] = ""
         return
 
-    # 编号后让 LLM 翻译，返回 JSON
+    # 编号后让 LLM 翻译，返回 序号->中文 的字典
     numbered = "\n".join(f"{i+1}. {it['title_en']}" for i, it in enumerate(items))
     prompt = (
         "把以下英文新闻标题翻译成简洁、地道的中文（时政财经军事科技类新闻，"
-        "保留专有名词和机构名）。只返回 JSON 数组，每个元素为 {\"id\": 序号, \"cn\": \"中文译文\"}，不要解释。\n\n"
+        "保留专有名词和机构名）。只返回一个 JSON 对象，key 是序号（字符串），value 是中文译文，不要解释。\n\n"
         + numbered
     )
     try:
@@ -104,10 +104,18 @@ def translate_batch(items):
             response_format={"type": "json_object"},
         )
         raw = resp.choices[0].message.content
-        # 解析 JSON（可能包在 {\"items\":[...]} 里）
         data = json.loads(raw)
-        arr = data if isinstance(data, list) else data.get("items") or data.get("translations") or list(data.values())[0]
-        mp = {int(x["id"]): x["cn"] for x in arr}
+        # data 可能是 {"1": "...", "2": "..."} 或嵌套在某个 key 里
+        if all(isinstance(v, str) for v in data.values()):
+            mp = {int(k): v for k, v in data.items()}
+        else:
+            # 嵌套结构，找第一个值是 dict/list 的
+            for v in data.values():
+                if isinstance(v, dict):
+                    mp = {int(k): str(val) for k, val in v.items()}
+                    break
+            else:
+                mp = {}
         for i, it in enumerate(items):
             it["title_cn"] = mp.get(i + 1, it["title_en"])
     except Exception as ex:
