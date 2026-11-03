@@ -24,23 +24,19 @@ SOURCES = {
         ("NPR World",        "https://feeds.npr.org/1004/rss.xml"),
         ("Al Jazeera",       "https://www.aljazeera.com/xml/rss/all.xml"),
         ("AP Top News",      "https://feeds.apnews.com/rss/apf-topnews"),
-        ("澎湃新闻",          "https://feed.pengpai.com/news"),
-        ("观察者网",          "https://www.guancha.cn/rss/"),
     ],
     "财金": [
         ("CNBC World",       "https://www.cnbc.com/id/100727363/device/rss/rss.html"),
         ("Financial Times",  "https://www.ft.com/?format=rss"),
         ("MarketWatch",      "https://feeds.marketwatch.com/marketwatch/topstories/"),
         ("Yahoo Finance",    "https://finance.yahoo.com/news/rssindex"),
-        ("华尔街见闻",         "https://dedicated.wallstreetcn.com/rss.xml"),
-        ("财新网",           "https://www.caixin.com/rss/finance.xml"),
+        ("华尔街见闻",        "https://dedicated.wallstreetcn.com/rss.xml"),
     ],
     "军事": [
         ("Defense One",      "https://www.defenseone.com/rss/all/"),
         ("Breaking Defense", "https://breakingdefense.com/feed/"),
         ("The War Zone",     "https://www.twz.com/rss"),
         ("SpaceNews",        "https://spacenews.com/feed/"),
-        ("环球军事",          "https://www.huanqiu.com/rss/mil.xml"),
     ],
     "科技": [
         ("TechCrunch",       "https://techcrunch.com/feed/"),
@@ -48,8 +44,7 @@ SOURCES = {
         ("Wired",            "https://www.wired.com/feed/rss"),
         ("Ars Technica",     "https://feeds.arstechnica.com/arstechnica/index"),
         ("Hacker News",      "https://hnrss.org/frontpage"),
-        ("36氪",             "https://36kr.com/feed"),
-        ("虎嗅",             "https://www.huxiu.com/rss/0.xml"),
+        ("爱范儿",           "https://www.ifanr.com/feed"),
     ],
 }
 
