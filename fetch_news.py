@@ -129,6 +129,7 @@ def translate_batch(items):
                 response_format={"type": "json_object"},
             )
             raw = resp.choices[0].message.content
+            print(f"[DEBUG] LLM返回: {raw[:300]}", file=sys.stderr)
             data = json.loads(raw)
             if all(isinstance(v, str) for v in data.values()):
                 mp = {int(k): v for k, v in data.items()}
