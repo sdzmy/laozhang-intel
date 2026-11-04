@@ -159,7 +159,64 @@ def translate_batch(items):
         it["summary_cn"] = ""
 
 
-def render_html(category_items, generated_at):
+# ============ 市场行情（东方财富免费API） ============
+MARKET_INDICES = [
+    # (secid, 中文名, 市场)
+    ("1.000001",  "上证指数",   "A股"),
+    ("0.399001",  "深证成指",   "A股"),
+    ("0.399006",  "创业板指",   "A股"),
+    ("100.HSI",   "恒生指数",   "港股"),
+    ("100.DJIA",  "道琼斯",     "美股"),
+    ("100.NDX",   "纳斯达克100","美股"),
+    ("100.SPX",   "标普500",    "美股"),
+    ("100.N225",  "日经225",    "日股"),
+]
+
+import urllib.request
+import urllib.error
+
+def _em_get(url, timeout=8):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://quote.eastmoney.com/"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+def fetch_market():
+    """抓主要指数实时行情 + 30日日K线"""
+    results = []
+    for secid, name, market in MARKET_INDICES:
+        try:
+            # 实时行情
+            q = _em_get(
+                f"https://push2.eastmoney.com/api/qt/stock/get?secid={secid}"
+                f"&fields=f43,f44,f45,f46,f57,f58,f169,f170"
+            )
+            d = q.get("data") or {}
+            # 东财价格需要除以100（指数类）
+            price = (d.get("f43") or 0) / 100
+            chg    = (d.get("f169") or 0) / 100
+            chg_pct= (d.get("f170") or 0) / 100
+            # K线（日K，最近30根）
+            k = _em_get(
+                f"https://push2his.eastmoney.com/api/qt/stock/kline/get?secid={secid}"
+                f"&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55"
+                f"&klt=101&fqt=1&beg=20250901&end=20500101&lmt=30"
+            )
+            klines = []
+            for line in (k.get("data") or {}).get("klines", []):
+                parts = line.split(",")
+                # date, open, close, high, low → ECharts candle: [date, open, close, low, high]
+                klines.append([parts[0], float(parts[1]), float(parts[2]), float(parts[4]), float(parts[3])])
+            results.append({
+                "name": name, "market": market, "secid": secid,
+                "price": price, "chg": chg, "chg_pct": chg_pct,
+                "klines": klines,
+            })
+        except Exception as ex:
+            print(f"[WARN] 行情 {name} 失败: {ex}", file=sys.stderr)
+    return results
+
+
+def render_html(category_items, market_data, generated_at):
     """生成自包含 index.html"""
     cat_colors = {
         "时政": "#e74c3c",
@@ -168,6 +225,52 @@ def render_html(category_items, generated_at):
         "科技": "#3498db",
     }
     cat_icons = {"时政": "🌍", "财金": "💰", "军事": "🎖️", "科技": "🔬"}
+
+    # ===== 市场行情板块 =====
+    market_cards = []
+    chart_scripts = []
+    for idx, m in enumerate(market_data):
+        up = m["chg"] >= 0
+        color = "#ef5350" if up else "#26a69a"  # 红涨绿跌（A股习惯）
+        arrow = "▲" if up else "▼"
+        price_str = f"{m['price']:.2f}"
+        chg_str = f"{arrow} {m['chg']:+.2f} ({m['chg_pct']:+.2f}%)"
+        chart_id = f"kline_{idx}"
+        # ECharts candle data: [date, open, close, low, high]
+        kdata = json.dumps(m["klines"], ensure_ascii=False)
+        market_cards.append(f"""
+        <div class="mkt-card">
+          <div class="mkt-head">
+            <span class="mkt-name">{html.escape(m['name'])}</span>
+            <span class="mkt-tag">{html.escape(m['market'])}</span>
+          </div>
+          <div class="mkt-price" style="color:{color}">{price_str}</div>
+          <div class="mkt-chg" style="color:{color}">{chg_str}</div>
+          <div id="{chart_id}" class="mkt-chart"></div>
+        </div>""")
+        chart_scripts.append(f"""
+        (function(){{
+          var el=document.getElementById('{chart_id}');
+          if(!el) return;
+          var chart=echarts.init(el,'dark',{{renderer:'canvas'}});
+          var kd={kdata};
+          chart.setOption({{
+            animation:false,
+            grid:{{left:5,right:5,top:5,bottom:5}},
+            xAxis:{{type:'category',show:false,data:kd.map(d=>d[0])}},
+            yAxis:{{scale:true,show:false}},
+            tooltip:{{trigger:'axis',axisPointer:{{type:'cross'}},backgroundColor:'#161b22',borderColor:'#30363d',textStyle:{{color:'#e6edf3',fontSize:11}}}},
+            series:[{{type:'candlestick',data:kd.map(d=>[d[1],d[2],d[3],d[4]]),
+              itemStyle:{{color:'#ef5350',color0:'#26a69a',borderColor:'#ef5350',borderColor0:'#26a69a'}}
+            }}]
+          }});
+        }})();""")
+
+    market_section = f"""
+    <section class="category" id="market">
+      <h2 style="border-color:#d4a017"><span style="color:#d4a017">📊</span> 市场行情 <small>主要指数 · 日K线</small></h2>
+      <div class="mkt-grid">{''.join(market_cards)}</div>
+    </section>"""
 
     sections = []
     for cat, items in category_items.items():
@@ -200,6 +303,7 @@ def render_html(category_items, generated_at):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>老张的情报站</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <style>
   * {{ margin:0; padding:0; box-sizing:border-box; }}
   body {{
@@ -237,6 +341,16 @@ def render_html(category_items, generated_at):
   .news-meta {{ font-size:.78em; color:#8b949e; }}
   .news-meta .src {{ color:#d4a017; margin-right:10px; }}
   .news-meta .en {{ display:block; margin-top:3px; font-style:italic; opacity:.7; }}
+  .mkt-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }}
+  .mkt-card {{
+    background:#161b22; border:1px solid #30363d; border-radius:10px; padding:14px 16px;
+  }}
+  .mkt-head {{ display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }}
+  .mkt-name {{ font-weight:700; font-size:1.05em; color:#e6edf3; }}
+  .mkt-tag {{ font-size:.72em; color:#8b949e; background:#21262d; padding:2px 8px; border-radius:10px; }}
+  .mkt-price {{ font-size:1.5em; font-weight:800; font-variant-numeric:tabular-nums; }}
+  .mkt-chg {{ font-size:.88em; margin-bottom:8px; font-weight:600; }}
+  .mkt-chart {{ width:100%; height:90px; }}
   footer {{ text-align:center; padding:30px; color:#6e7681; font-size:.85em; border-top:1px solid #21262d; }}
 </style>
 </head>
@@ -247,9 +361,11 @@ def render_html(category_items, generated_at):
   <div class="time">更新时间：{now_str}（北京时间）</div>
 </header>
 <div class="container">
+  {market_section}
   {''.join(sections)}
 </div>
 <footer>老张的情报站 · 自动采集自全球主流媒体 RSS · 中文由 AI 翻译生成</footer>
+<script>{''.join(chart_scripts)}</script>
 </body>
 </html>"""
     return html_doc
@@ -265,7 +381,11 @@ def main():
         translate_batch(items)
         all_items[cat] = items
 
-    doc = render_html(all_items, now)
+    print("[INFO] 抓取市场行情...")
+    market_data = fetch_market()
+    print(f"[INFO] 行情拿到 {len(market_data)} 个指数")
+
+    doc = render_html(all_items, market_data, now)
     out_path = os.path.join(os.path.dirname(__file__), "index.html")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(doc)
