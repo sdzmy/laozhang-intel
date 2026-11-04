@@ -102,11 +102,14 @@ def translate_batch(items):
             to_translate.append(it)
 
     if not to_translate:
+        print(f"[DBG] all chinese, skip", file=sys.stderr)
         return
     if not client:
+        print(f"[DBG] client is None! API_KEY set: {bool(API_KEY)}", file=sys.stderr)
         for it in to_translate:
             it["title_cn"] = it["title_en"]
         return
+    print(f"[DBG] translating {len(to_translate)} items, client ok, model={MODEL}, base={BASE_URL}", file=sys.stderr)
 
     # 编号后让 LLM 翻译，返回 序号->中文 的字典
     numbered = "\n".join(f"{i+1}. {it['title_en']}" for i, it in enumerate(to_translate))
@@ -148,6 +151,7 @@ def translate_batch(items):
             raw = resp.choices[0].message.content
             data = json.loads(raw)
             mp = extract_num_map(data)
+            print(f"[DBG] LLM returned mp size={len(mp)}, raw[:200]={raw[:200]}", file=sys.stderr)
             if mp:
                 break
         except Exception as ex:
