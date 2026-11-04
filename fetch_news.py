@@ -102,9 +102,7 @@ def translate_batch(items):
             to_translate.append(it)
 
     if not to_translate:
-        print(f"[DEBUG] 全部已是中文，跳过翻译（共{len(items)}条）", file=sys.stderr)
         return
-    print(f"[DEBUG] 需要翻译 {len(to_translate)}/{len(items)} 条，首条: {to_translate[0]['title_en'][:60]}", file=sys.stderr)
     if not client:
         for it in to_translate:
             it["title_cn"] = it["title_en"]
@@ -119,6 +117,25 @@ def translate_batch(items):
     )
     import time
     mp = {}
+    def extract_num_map(obj, depth=0):
+        """递归从任意嵌套 JSON 中找 数字键->字符串值 的字典"""
+        if depth > 5:
+            return {}
+        result = {}
+        if isinstance(obj, dict):
+            # 检查这个 dict 本身是否是 数字->字符串 映射
+            if all(str(k).isdigit() and isinstance(v, str) for k, v in obj.items()):
+                return {int(k): v for k, v in obj.items()}
+            for v in obj.values():
+                result.update(extract_num_map(v, depth + 1))
+        elif isinstance(obj, list):
+            for i, v in enumerate(obj):
+                if isinstance(v, dict):
+                    result.update(extract_num_map(v, depth + 1))
+                elif isinstance(v, str) and i < len(to_translate):
+                    result[i + 1] = v
+        return result
+
     for attempt in range(3):
         try:
             resp = client.chat.completions.create(
@@ -129,15 +146,8 @@ def translate_batch(items):
                 response_format={"type": "json_object"},
             )
             raw = resp.choices[0].message.content
-            print(f"[DEBUG] LLM返回: {raw[:300]}", file=sys.stderr)
             data = json.loads(raw)
-            if all(isinstance(v, str) for v in data.values()):
-                mp = {int(k): v for k, v in data.items()}
-            else:
-                for v in data.values():
-                    if isinstance(v, dict):
-                        mp = {int(k): str(val) for k, val in v.items()}
-                        break
+            mp = extract_num_map(data)
             if mp:
                 break
         except Exception as ex:
@@ -247,7 +257,6 @@ def render_html(category_items, generated_at):
 
 def main():
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=8)  # 北京时间
-    print(f"[DEBUG] API_KEY 已设置: {bool(API_KEY)}, BASE_URL: {BASE_URL}, MODEL: {MODEL}, client: {client is not None}")
     all_items = {}
     for cat, feeds in SOURCES.items():
         print(f"[INFO] 抓取 {cat} ...")
