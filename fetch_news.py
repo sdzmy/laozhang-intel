@@ -159,55 +159,56 @@ def translate_batch(items):
         it["summary_cn"] = ""
 
 
-# ============ 市场行情（东方财富免费API） ============
+# ============ 市场行情（Yahoo Finance API，全球可用） ============
 MARKET_INDICES = [
-    # (secid, 中文名, 市场)
-    ("1.000001",  "上证指数",   "A股"),
-    ("0.399001",  "深证成指",   "A股"),
-    ("0.399006",  "创业板指",   "A股"),
-    ("100.HSI",   "恒生指数",   "港股"),
-    ("100.DJIA",  "道琼斯",     "美股"),
-    ("100.NDX",   "纳斯达克100","美股"),
-    ("100.SPX",   "标普500",    "美股"),
-    ("100.N225",  "日经225",    "日股"),
+    # (yahoo ticker, 中文名, 市场)
+    ("000001.SS", "上证指数",    "A股"),
+    ("399001.SZ", "深证成指",    "A股"),
+    ("399006.SZ", "创业板指",    "A股"),
+    ("^HSI",      "恒生指数",    "港股"),
+    ("^DJI",      "道琼斯",      "美股"),
+    ("^IXIC",     "纳斯达克",    "美股"),
+    ("^GSPC",     "标普500",     "美股"),
+    ("^N225",     "日经225",     "日股"),
 ]
 
 import urllib.request
 import urllib.error
 
-def _em_get(url, timeout=8):
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://quote.eastmoney.com/"})
+def _em_get(url, timeout=10):
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode("utf-8"))
 
 def fetch_market():
-    """抓主要指数实时行情 + 30日日K线"""
+    """抓主要指数实时行情 + 30日日K线（Yahoo Finance）"""
     results = []
-    for secid, name, market in MARKET_INDICES:
+    for ticker, name, market in MARKET_INDICES:
         try:
-            # 实时行情
-            q = _em_get(
-                f"https://push2.eastmoney.com/api/qt/stock/get?secid={secid}"
-                f"&fields=f43,f44,f45,f46,f57,f58,f169,f170"
-            )
-            d = q.get("data") or {}
-            # 东财价格需要除以100（指数类）
-            price = (d.get("f43") or 0) / 100
-            chg    = (d.get("f169") or 0) / 100
-            chg_pct= (d.get("f170") or 0) / 100
-            # K线（日K，最近30根）
-            k = _em_get(
-                f"https://push2his.eastmoney.com/api/qt/stock/kline/get?secid={secid}"
-                f"&fields1=f1,f2,f3,f4,f5,f6&fields2=f51,f52,f53,f54,f55"
-                f"&klt=101&fqt=1&beg=20250901&end=20500101&lmt=30"
-            )
+            url = f"https://query1.finance.yahoo.com/v8/finance/chart/{ticker}?range=2mo&interval=1d"
+            data = _em_get(url, timeout=10)
+            result = data["chart"]["result"][0]
+            meta = result["meta"]
+            price = meta["regularMarketPrice"]
+            prev = meta.get("chartPreviousClose") or meta.get("previousClose") or price
+            chg = price - prev
+            chg_pct = (chg / prev * 100) if prev else 0
+            # K线
+            ts = result.get("timestamp", [])
+            q = result["indicators"]["quote"][0]
+            opens = q.get("open", [])
+            closes = q.get("close", [])
+            highs = q.get("high", [])
+            lows = q.get("low", [])
             klines = []
-            for line in (k.get("data") or {}).get("klines", []):
-                parts = line.split(",")
-                # date, open, close, high, low → ECharts candle: [date, open, close, low, high]
-                klines.append([parts[0], float(parts[1]), float(parts[2]), float(parts[4]), float(parts[3])])
+            for i in range(len(ts)):
+                if opens[i] is None or closes[i] is None:
+                    continue
+                d = datetime.datetime.fromtimestamp(ts[i]).strftime("%m-%d")
+                klines.append([d, round(opens[i],2), round(closes[i],2), round(lows[i],2), round(highs[i],2)])
+            klines = klines[-30:]  # 最近30根
             results.append({
-                "name": name, "market": market, "secid": secid,
+                "name": name, "market": market, "ticker": ticker,
                 "price": price, "chg": chg, "chg_pct": chg_pct,
                 "klines": klines,
             })
