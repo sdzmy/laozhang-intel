@@ -244,6 +244,7 @@ def render_html(category_items, generated_at):
 
 def main():
     now = datetime.datetime.utcnow() + datetime.timedelta(hours=8)  # 北京时间
+    print(f"[DEBUG] API_KEY 已设置: {bool(API_KEY)}, BASE_URL: {BASE_URL}, MODEL: {MODEL}, client: {client is not None}")
     all_items = {}
     for cat, feeds in SOURCES.items():
         print(f"[INFO] 抓取 {cat} ...")
