@@ -102,7 +102,9 @@ def translate_batch(items):
             to_translate.append(it)
 
     if not to_translate:
+        print(f"[DEBUG] 全部已是中文，跳过翻译（共{len(items)}条）", file=sys.stderr)
         return
+    print(f"[DEBUG] 需要翻译 {len(to_translate)}/{len(items)} 条，首条: {to_translate[0]['title_en'][:60]}", file=sys.stderr)
     if not client:
         for it in to_translate:
             it["title_cn"] = it["title_en"]
