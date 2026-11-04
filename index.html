@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>老张的情报站</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   body {
@@ -41,6 +42,16 @@
   .news-meta { font-size:.78em; color:#8b949e; }
   .news-meta .src { color:#d4a017; margin-right:10px; }
   .news-meta .en { display:block; margin-top:3px; font-style:italic; opacity:.7; }
+  .mkt-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; }
+  .mkt-card {
+    background:#161b22; border:1px solid #30363d; border-radius:10px; padding:14px 16px;
+  }
+  .mkt-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+  .mkt-name { font-weight:700; font-size:1.05em; color:#e6edf3; }
+  .mkt-tag { font-size:.72em; color:#8b949e; background:#21262d; padding:2px 8px; border-radius:10px; }
+  .mkt-price { font-size:1.5em; font-weight:800; font-variant-numeric:tabular-nums; }
+  .mkt-chg { font-size:.88em; margin-bottom:8px; font-weight:600; }
+  .mkt-chart { width:100%; height:90px; }
   footer { text-align:center; padding:30px; color:#6e7681; font-size:.85em; border-top:1px solid #21262d; }
 </style>
 </head>
@@ -48,9 +59,14 @@
 <header>
   <h1>老张的情报站</h1>
   <div class="sub">全球时政 · 财金 · 军事 · 科技 每日情报速递</div>
-  <div class="time">更新时间：2026-11-04 13:08（北京时间）</div>
+  <div class="time">更新时间：2026-11-04 13:16（北京时间）</div>
 </header>
 <div class="container">
+  
+    <section class="category" id="market">
+      <h2 style="border-color:#d4a017"><span style="color:#d4a017">📊</span> 市场行情 <small>主要指数 · 日K线</small></h2>
+      <div class="mkt-grid"></div>
+    </section>
   
         <section class="category">
             <h2 style="border-color:#e74c3c"><span style="color:#e74c3c">🌍</span> 时政 <small>15 条</small></h2>
@@ -84,7 +100,7 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.bbc.co.uk/news/articles/cm0qkxzv3j99o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">
-                    <div class="news-title">武器还是葡萄酒瓶？中国反驳巴布亚新几内亚炮弹报道</div>
+                    <div class="news-title">武器还是葡萄酒瓶？中国否认巴布亚新几内亚发现炮弹的报道</div>
                     <div class="news-meta">
                         <span class="src">🌍 BBC World</span>
                         <span class="en">Weapon or wine bottle? China disputes reports of artillery shell in Papua New Guinea</span>
@@ -98,14 +114,14 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.theguardian.com/business/2026/oct/30/sinkholes-scarred-land-scapegoats-illegal-gold-mining-johannesburg" target="_blank" rel="noopener">
-                    <div class="news-title">天坑、伤痕土地与替罪羊：约翰内斯堡非法采金的祸害</div>
+                    <div class="news-title">天坑、疮痍土地与替罪羊：约翰内斯堡非法采金的祸害</div>
                     <div class="news-meta">
                         <span class="src">🌍 Guardian World</span>
                         <span class="en">Sinkholes, scarred land and scapegoats: the scourge of illegal gold mining in Johannesburg</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://www.theguardian.com/world/2026/oct/30/sudanese-diaspora-human-rights-groups-denounce-uae-nominee-un-top-job" target="_blank" rel="noopener">
-                    <div class="news-title">苏丹侨民和人权组织谴责阿联酋提名的联合国最高职位人选</div>
+                    <div class="news-title">苏丹侨民与人权组织谴责阿联酋提名的联合国最高职位人选</div>
                     <div class="news-meta">
                         <span class="src">🌍 Guardian World</span>
                         <span class="en">Sudanese diaspora and human rights groups denounce UAE nominee for UN top job</span>
@@ -119,7 +135,7 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.theguardian.com/global-development/2026/oct/28/africa-ebola-outbreak-could-reach-uk-says-top-health-official" target="_blank" rel="noopener">
-                    <div class="news-title">高级卫生官员称非洲“史无前例”的埃博拉疫情可能波及英国</div>
+                    <div class="news-title">高级卫生官员称非洲“前所未有”的埃博拉疫情可能波及英国</div>
                     <div class="news-meta">
                         <span class="src">🌍 Guardian World</span>
                         <span class="en">Africa’s ‘unprecedented’ Ebola outbreak could reach UK, says top health official</span>
@@ -133,14 +149,14 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.npr.org/2026/11/03/g-s1-151238/ukraine-russia-ceasefire-oleshky-kherson" target="_blank" rel="noopener">
-                    <div class="news-title">对乌克兰赫尔松地区而言，短暂停火意味着暂时恢复正常生活</div>
+                    <div class="news-title">对乌克兰赫尔松地区而言，短暂停火意味着暂时回归正常生活</div>
                     <div class="news-meta">
                         <span class="src">🌍 NPR World</span>
                         <span class="en">For Ukraine&#x27;s Kherson region, a short ceasefire meant a momentary return to normal life</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://www.npr.org/2026/11/03/g-s1-151468/indian-navy-rescues-20-crew-from-iranian-fishing-boat-hijacked-off-somalia" target="_blank" rel="noopener">
-                    <div class="news-title">印度海军从索马里附近被劫持的伊朗渔船上救出20名船员</div>
+                    <div class="news-title">印度海军从索马里附近被劫持的伊朗渔船救出20名船员</div>
                     <div class="news-meta">
                         <span class="src">🌍 NPR World</span>
                         <span class="en">Indian navy rescues 20 crew from Iranian fishing boat hijacked off Somalia</span>
@@ -154,7 +170,7 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.npr.org/2026/11/03/g-s1-151439/russia-ukraine-war" target="_blank" rel="noopener">
-                    <div class="news-title">俄罗斯袭击乌克兰援助点死亡人数升至29人，48人仍失踪</div>
+                    <div class="news-title">俄罗斯袭击乌克兰援助点死亡人数升至29人，仍有48人失踪</div>
                     <div class="news-meta">
                         <span class="src">🌍 NPR World</span>
                         <span class="en">Death toll hits 29 after Russian strike on Ukrainian aid site, with 48 still missing</span>
@@ -165,7 +181,7 @@
             <h2 style="border-color:#f39c12"><span style="color:#f39c12">💰</span> 财金 <small>15 条</small></h2>
             <div class="news-list">
                 <a class="news-item" href="https://www.ft.com/content/77c2eaca-4fe1-4c69-b3bd-c517b045ff37?syn-25a6b1a6=1" target="_blank" rel="noopener">
-                    <div class="news-title">民主党锁定参议院多数席位，选民对特朗普的共和党人大加抨击</div>
+                    <div class="news-title">民主党锁定参议院多数席位，选民对特朗普的共和党表达不满</div>
                     <div class="news-meta">
                         <span class="src">💰 Financial Times</span>
                         <span class="en">Democrats clinch majority in Senate as voters lash out at Trump’s Republicans</span>
@@ -179,24 +195,24 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.ft.com/content/f3afd549-65fc-487e-922e-2748fa6a8a5f?syn-25a6b1a6=1" target="_blank" rel="noopener">
-                    <div class="news-title">特朗普向FT表示美国暂无立即打击伊朗的计划</div>
+                    <div class="news-title">特朗普向《金融时报》表示，美国暂无立即打击伊朗的计划</div>
                     <div class="news-meta">
                         <span class="src">💰 Financial Times</span>
                         <span class="en">US has no immediate plan to strike Iran, Trump tells FT</span>
                     </div>
                 </a>
-                <a class="news-item" href="https://www.ft.com/content/703f842f-599f-4267-a7c9-1ec1d00ded00?syn-25a6b1a6=1" target="_blank" rel="noopener">
-                    <div class="news-title">特朗普第二任期令人头晕目眩的动荡</div>
-                    <div class="news-meta">
-                        <span class="src">💰 Financial Times</span>
-                        <span class="en">The head-spinning turbulence of Trump’s second term</span>
-                    </div>
-                </a>
                 <a class="news-item" href="https://www.ft.com/content/a0b18705-3bd8-4886-992c-b6062fdec6ea?syn-25a6b1a6=1" target="_blank" rel="noopener">
-                    <div class="news-title">民主党胜选加剧AI担忧，全球股市与美元下滑</div>
+                    <div class="news-title">民主党获胜引发AI担忧，全球股市与美元下滑</div>
                     <div class="news-meta">
                         <span class="src">💰 Financial Times</span>
                         <span class="en">Global stocks and dollar slide as Democratic wins stoke AI fears</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://www.ft.com/content/2f1a826a-5d98-47ba-be3f-5d21edce89c8?syn-25a6b1a6=1" target="_blank" rel="noopener">
+                    <div class="news-title">特朗普称美国将在年底前终止对以色列的军事援助</div>
+                    <div class="news-meta">
+                        <span class="src">💰 Financial Times</span>
+                        <span class="en">Trump says US will end military aid to Israel by end of the year</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://www.marketwatch.com/story/democrats-win-the-senate-but-control-of-the-house-is-still-up-in-the-air-heres-what-it-means-for-your-finances-ed78cd6e?mod=mw_rss_topstories" target="_blank" rel="noopener">
@@ -214,7 +230,7 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.marketwatch.com/story/super-micros-stock-pops-as-earnings-show-booming-demand-for-ai-servers-2d179658?mod=mw_rss_topstories" target="_blank" rel="noopener">
-                    <div class="news-title">超微股价飙升，财报显示AI服务器需求旺盛</div>
+                    <div class="news-title">超微电脑股价飙升，财报显示AI服务器需求旺盛</div>
                     <div class="news-meta">
                         <span class="src">💰 MarketWatch</span>
                         <span class="en">Super Micro’s stock pops as earnings show booming demand for AI servers</span>
@@ -228,10 +244,17 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.marketwatch.com/story/shopifys-stock-slides-after-earnings-this-is-whats-worrying-wall-street-e2e8d52b?mod=mw_rss_topstories" target="_blank" rel="noopener">
-                    <div class="news-title">Shopify财报后股价下滑，令华尔街担忧的是这一点。</div>
+                    <div class="news-title">Shopify财报后股价下滑。这才是华尔街担忧之处。</div>
                     <div class="news-meta">
                         <span class="src">💰 MarketWatch</span>
                         <span class="en">Shopify’s stock slides after earnings. This is what’s worrying Wall Street.</span>
+                    </div>
+                </a>
+                <a class="news-item" href="https://wallstreetcn.com/articles/3785144" target="_blank" rel="noopener">
+                    <div class="news-title">民主党大胜！特朗普：绝对愿意接受选举结果，准备与民主党合作</div>
+                    <div class="news-meta">
+                        <span class="src">💰 华尔街见闻</span>
+                        <span class="en">民主党大胜！特朗普：绝对愿意接受选举结果，准备与民主党合作</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://wallstreetcn.com/articles/3785139" target="_blank" rel="noopener">
@@ -261,20 +284,13 @@
                         <span class="src">💰 华尔街见闻</span>
                         <span class="en">SemiAnalysis拆解算力荒：OpenAI与Anthropic正在抢光全球新增算力</span>
                     </div>
-                </a>
-                <a class="news-item" href="https://wallstreetcn.com/articles/3785133" target="_blank" rel="noopener">
-                    <div class="news-title">创业板冲高回落午盘微涨0.1%，科创综指涨超1%，物理AI、半导体集体反弹，恒科指跌1%，生物医药拉升</div>
-                    <div class="news-meta">
-                        <span class="src">💰 华尔街见闻</span>
-                        <span class="en">创业板冲高回落午盘微涨0.1%，科创综指涨超1%，物理AI、半导体集体反弹，恒科指跌1%，生物医药拉升</span>
-                    </div>
                 </a></div>
         </section>
         <section class="category">
             <h2 style="border-color:#9b59b6"><span style="color:#9b59b6">🎖️</span> 军事 <small>15 条</small></h2>
             <div class="news-list">
                 <a class="news-item" href="https://www.defenseone.com/defense-systems/2026/11/pentagon-ukraine-ground-robots/417011/" target="_blank" rel="noopener">
-                    <div class="news-title">五角大楼开始效仿乌克兰，扩大地面机器人使用</div>
+                    <div class="news-title">五角大楼开始效仿乌克兰，更广泛地使用地面机器人</div>
                     <div class="news-meta">
                         <span class="src">🎖️ Defense One</span>
                         <span class="en">Pentagon is beginning to follow Ukraine into wider use of ground robots</span>
@@ -295,7 +311,7 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.defenseone.com/technology/2026/11/pentagons-it-agency-wants-bridge-network-gaps-pacific/416963/" target="_blank" rel="noopener">
-                    <div class="news-title">五角大楼IT机构欲弥合太平洋网络缺口</div>
+                    <div class="news-title">五角大楼IT机构希望弥合太平洋地区的网络缺口</div>
                     <div class="news-meta">
                         <span class="src">🎖️ Defense One</span>
                         <span class="en">The Pentagon’s IT agency wants to bridge network gaps in the Pacific</span>
@@ -309,7 +325,7 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://breakingdefense.com/2026/11/snc-pulls-out-of-navy-trainer-jet-t45-ujts-leonardo-textron/" target="_blank" rel="noopener">
-                    <div class="news-title">独家：SNC退出海军教练机竞标，德事隆或成赢家</div>
+                    <div class="news-title">独家：SNC退出海军教练机竞标，Textron或成赢家</div>
                     <div class="news-meta">
                         <span class="src">🎖️ Breaking Defense</span>
                         <span class="en">EXCLUSIVE: SNC pulls out of Navy’s trainer jet competition, leaving Textron likely winner</span>
@@ -323,14 +339,14 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://breakingdefense.com/2026/11/air-force-divests-its-few-a-29s-explores-future-options/" target="_blank" rel="noopener">
-                    <div class="news-title">空军剥离少量A-29飞机，探索“未来选项”</div>
+                    <div class="news-title">空军剥离其少量A-29飞机，探索“未来选项”</div>
                     <div class="news-meta">
                         <span class="src">🎖️ Breaking Defense</span>
                         <span class="en">Air Force divests its few A-29s, explores ‘future options’</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://breakingdefense.com/2026/11/ausa-2026-the-ground-truth-on-the-armys-next-chapter/" target="_blank" rel="noopener">
-                    <div class="news-title">AUSA 2026：陆军下一篇章的地面真相</div>
+                    <div class="news-title">AUSA 2026：陆军下一篇章的实地真相</div>
                     <div class="news-meta">
                         <span class="src">🎖️ Breaking Defense</span>
                         <span class="en">AUSA 2026: The ground truth on the Army’s next chapter</span>
@@ -344,14 +360,14 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.twz.com/news-features/what-trumps-drastic-reduction-of-u-s-military-aid-to-israel-could-mean" target="_blank" rel="noopener">
-                    <div class="news-title">特朗普大幅削减对以军援可能意味着什么</div>
+                    <div class="news-title">特朗普大幅削减美国对以色列军事援助可能意味着什么</div>
                     <div class="news-meta">
                         <span class="src">🎖️ The War Zone</span>
                         <span class="en">What Trump’s Drastic Reduction Of U.S. Military Aid To Israel Could Mean</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://www.twz.com/sea/this-is-naval-groups-concept-for-a-stealthy-drone-armed-future-destroyer" target="_blank" rel="noopener">
-                    <div class="news-title">这是海军集团对未来隐形无人机武装驱逐舰的构想</div>
+                    <div class="news-title">这是海军集团对未来隐身无人机武装驱逐舰的构想</div>
                     <div class="news-meta">
                         <span class="src">🎖️ The War Zone</span>
                         <span class="en">This Is Naval Group’s Concept For A Stealthy, Drone-Armed Future Destroyer</span>
@@ -365,14 +381,14 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.twz.com/air/airborne-laser-weapon-for-tactical-aircraft-being-developed-by-germany" target="_blank" rel="noopener">
-                    <div class="news-title">德国正为战术飞机研发机载激光武器</div>
+                    <div class="news-title">德国正在为战术飞机研发机载激光武器</div>
                     <div class="news-meta">
                         <span class="src">🎖️ The War Zone</span>
                         <span class="en">Airborne Laser Weapon For Tactical Aircraft Being Developed By Germany</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://www.twz.com/nuclear/a-nuclear-strike-on-iran-it-sounds-absurd-because-it-is-lets-talk-about-it" target="_blank" rel="noopener">
-                    <div class="news-title">对伊朗核打击？听起来荒谬，因为确实如此。我们来谈谈</div>
+                    <div class="news-title">对伊朗核打击？听起来荒谬，因为确实荒谬。我们来谈谈</div>
                     <div class="news-meta">
                         <span class="src">🎖️ The War Zone</span>
                         <span class="en">A Nuclear Strike On Iran? It Sounds Absurd Because It Is. Let’s Talk About It</span>
@@ -383,7 +399,7 @@
             <h2 style="border-color:#3498db"><span style="color:#3498db">🔬</span> 科技 <small>15 条</small></h2>
             <div class="news-list">
                 <a class="news-item" href="https://techcrunch.com/2026/11/03/indias-eloelo-nabs-80m-from-nbc-universal-to-bet-on-the-countrys-rising-microdrama-market/" target="_blank" rel="noopener">
-                    <div class="news-title">印度EloElo获NBC环球8000万美元投资，押注该国微短剧市场崛起</div>
+                    <div class="news-title">印度EloElo获NBC环球8000万美元投资，押注该国兴起的微短剧市场</div>
                     <div class="news-meta">
                         <span class="src">🔬 TechCrunch</span>
                         <span class="en">India’s EloElo nabs $80M from NBCUniversal to bet on the country’s rising microdrama market</span>
@@ -397,35 +413,35 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://techcrunch.com/2026/11/03/data-centers-are-turning-to-old-jet-engines-as-the-wait-for-power-grows/" target="_blank" rel="noopener">
-                    <div class="news-title">电力供应等待期延长，数据中心转向旧喷气发动机</div>
+                    <div class="news-title">电力供应等待期延长，数据中心转向使用旧喷气发动机</div>
                     <div class="news-meta">
                         <span class="src">🔬 TechCrunch</span>
                         <span class="en">Data centers are turning to old jet engines as the wait for power grows</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://techcrunch.com/2026/11/03/ted-schleins-ballistic-ventures-seeks-490m-for-new-funds-amid-ai-driven-cybersecurity-boom/" target="_blank" rel="noopener">
-                    <div class="news-title">泰德·施莱因的Ballistic Ventures在AI驱动网络安全热潮中为新基金募资4.9亿美元</div>
+                    <div class="news-title">泰德·施莱因的Ballistic Ventures在AI驱动的网络安全热潮中为新基金募资4.9亿美元</div>
                     <div class="news-meta">
                         <span class="src">🔬 TechCrunch</span>
                         <span class="en">Ted Schlein’s Ballistic Ventures seeks $490M for new funds amid AI-driven cybersecurity boom</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://techcrunch.com/2026/11/03/hiding-inside-palantirs-skyrocketing-quarter-is-a-foreboding-signal/" target="_blank" rel="noopener">
-                    <div class="news-title">Palantir业绩飙升背后暗藏不祥信号</div>
+                    <div class="news-title">Palantir业绩飙升的季度背后隐藏着一个不祥信号</div>
                     <div class="news-meta">
                         <span class="src">🔬 TechCrunch</span>
                         <span class="en">Hiding inside Palantir’s skyrocketing quarter is a foreboding signal</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://www.theverge.com/tech/1026148/amd-earnings-q3-2026-data-center-pc" target="_blank" rel="noopener">
-                    <div class="news-title">AMD借数据中心业务实现史上&quot;规模最大、利润最高&quot;季度</div>
+                    <div class="news-title">AMD借数据中心业务创下史上&quot;规模最大、利润最高&quot;季度</div>
                     <div class="news-meta">
                         <span class="src">🔬 The Verge</span>
                         <span class="en">AMD rides data center riches to &amp;#8216;largest and most profitable&amp;#8217; quarter in history</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://www.theverge.com/games/1026112/the-legend-of-zelda-ocarina-of-time-remake-nintendo-switch-2-news" target="_blank" rel="noopener">
-                    <div class="news-title">关于《塞尔达传说：时之笛》重制版的全部消息</div>
+                    <div class="news-title">关于《塞尔达传说：时之笛》重制版的所有消息</div>
                     <div class="news-meta">
                         <span class="src">🔬 The Verge</span>
                         <span class="en">All the news about The Legend of Zelda: Ocarina of Time remake</span>
@@ -467,14 +483,14 @@
                     </div>
                 </a>
                 <a class="news-item" href="https://www.wired.com/story/iphone-duo-carrier-deal-november-2026/" target="_blank" rel="noopener">
-                    <div class="news-title">iPhone Duo立减1200美元？运营商合约的运作真相</div>
+                    <div class="news-title">iPhone Duo优惠1200美元？运营商合约的运作真相</div>
                     <div class="news-meta">
                         <span class="src">🔬 Wired</span>
                         <span class="en">$1,200 Off the iPhone Duo? Here’s How Carrier Deals Actually Work</span>
                     </div>
                 </a>
                 <a class="news-item" href="https://www.wired.com/story/the-internets-conspiracy-theorists-are-desperate-for-voter-fraud/" target="_blank" rel="noopener">
-                    <div class="news-title">互联网阴谋论者急切期盼选民欺诈</div>
+                    <div class="news-title">互联网阴谋论者急切盼望选民欺诈</div>
                     <div class="news-meta">
                         <span class="src">🔬 Wired</span>
                         <span class="en">The Internet’s Conspiracy Theorists Are Desperate for Voter Fraud</span>
@@ -490,5 +506,6 @@
         </section>
 </div>
 <footer>老张的情报站 · 自动采集自全球主流媒体 RSS · 中文由 AI 翻译生成</footer>
+<script></script>
 </body>
 </html>
