@@ -1,6 +1,6 @@
 # 老张的情报站 🏴
 
-自动采集全球 **时政 / 财金 / 军事 / 科技** 主流媒体 RSS，用 AI 翻译成中文，每 5 小时自动更新一次，生成静态网页部署在 Netlify。
+自动采集全球 **时政 / 财金 / 军事 / 科技** 主流媒体 RSS，用 AI 翻译成中文，每天 6/9/14/21 点自动更新，生成静态网页部署在 GitHub Pages。
 
 ## 定时更新时间（北京时间）
 
@@ -46,14 +46,14 @@ git push -u origin main
 到 GitHub 仓库 → **Actions** 标签 → 选「更新情报站」→ 点 **Run workflow**。
 跑成功后仓库根目录会多出一个 `index.html`。
 
-### 4. 部署到 Netlify
+### 4. 开启 GitHub Pages 发布
 
-1. 登录 https://app.netlify.com → **Add new site → Import an existing project → GitHub**
-2. 授权后选你刚建的 `laozhang-intel` 仓库
-3. 构建设置全部留空（Publish 目录填 `.`，或直接用仓库里的 `netlify.toml`），点 **Deploy**
-4. 等 1 分钟，拿到 `https://xxx.netlify.app` 域名
+1. 仓库 → **Settings → Pages**
+2. **Source** 选 `Deploy from a branch`，分支选 `main`，目录选 `/ (root)`，保存
+3. 仓库根目录放一个空文件 `.nojekyll`（关闭 Jekyll 处理）
+4. 等约 1 分钟，访问 `https://你的用户名.github.io/laozhang-intel/`
 
-以后每次 GitHub Actions 生成新的 `index.html` 并 push，Netlify 会自动重新部署，无需任何手动操作。
+以后每次 GitHub Actions 生成新的 `index.html` 并 push 到 main，Pages 会自动重新发布，无需任何手动操作。
 
 ## 自定义
 
@@ -66,9 +66,9 @@ git push -u origin main
 
 ```
 laozhang-intel/
-├── fetch_news.py              # 主脚本：抓 RSS + 翻译 + 生成 HTML
+├── fetch_news.py              # 主脚本：抓 RSS + 翻译 + 行情 + 生成 HTML
 ├── requirements.txt           # Python 依赖
 ├── .github/workflows/update.yml  # 定时任务
-├── netlify.toml               # Netlify 配置
+├── .nojekyll                  # 关闭 Pages 的 Jekyll 处理
 └── index.html                 # 自动生成，不用手改
 ```
